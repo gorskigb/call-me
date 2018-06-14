@@ -1,24 +1,20 @@
 package main
 
 import (
-	"net/http"
 	"encoding/json"
+	"net/http"
+	"call-me/contract"
 )
 
-//TODO: Move to separate file
-type GetCall struct{
-	Url string `json:"url"`
-}
-
-func main(){
-	//TODO: save request in database and handle with separate routine 
-	http.HandleFunc("/call/get", func(w http.ResponseWriter, r *http.Request){
-		if(r.Method != http.MethodPost){
+func main() {
+	//TODO: save request in database and handle with separate routine
+	http.HandleFunc("/call/get", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodPost {
 			http.Error(w, "Method not allowed. ", http.StatusMethodNotAllowed)
 			return
 		}
 
-		var callBody GetCall
+		var callBody contract.GetCall
 
 		//TODO: handle excpetion
 		json.NewDecoder(r.Body).Decode(&callBody)
